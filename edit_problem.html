@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="shortcut icon" href="#"/>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"
+    ></script>
+    <style>
+        .align {
+            justify-content: center;
+            align-items: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .title {
+            margin: 30px;
+
+            font-size: xx-large;
+        }
+
+        .wrap {
+            margin: 30px;
+            width: 670px;
+            justify-content: start;
+            border: 1px solid;
+        }
+
+        .boxbox {
+            margin: 0px 30px 0px 30px;
+        }
+
+        .boxes {
+            margin: 30px 0px 30px 0px;
+            font-size: 20px;
+        }
+
+        .input {
+            width: 600px;
+            height: 40px;
+
+            padding-left: 10px;
+        }
+
+        .text {
+            max-width: 590px;
+            min-width: 590px;
+            width: 590px;
+            height: 200px;
+
+            padding: 10px;
+        }
+
+        .box_pos {
+            align-items: center;
+            justify-content: space-evenly;
+            flex-direction: row;
+            display: flex;
+
+            margin: 30px;
+        }
+
+        .box {
+            width: 200px;
+            height: 50px;
+
+            font-size: 20px;
+        }
+    </style>
+    <script>
+        function edit_problem() {
+            const problemTitle = $('#problem_title').val()
+            const problemContent = $('#problem_content').val()
+            console.log("print")
+
+            $.ajax({
+                type: 'PATCH',
+                url: window.location.pathname,
+                data: JSON.stringify({
+                    'problem_title': problemTitle,
+                    'problem_content': problemContent,
+                }),
+                contentType: 'application/json',
+                success: function (response) {
+                    window.location.href = '/'
+                }
+            });
+        }
+    </script>
+    <title>edit_problem | Code Scanner</title>
+</head>
+<body>
+<div class="align">
+    <div class="title">
+        <h1>[ 문제 수정하기 ]</h1>
+    </div>
+
+    <div class="wrap">
+
+        <div class="boxbox">
+            <div class="boxes">Question Title</div>
+            <input
+                    id="problem_title"
+                    class="input"
+                    type="text"
+                    placeholder="제목을 입력하세요."
+                    maxlength="50"
+                    required
+            />
+            <div class="boxes">Description</div>
+            <textarea
+                    id="problem_content"
+                    class="text"
+                    type="text"
+                    placeholder="설명해주세요!"
+                    required
+            ></textarea>
+            <div class="boxes">Hashtag</div>
+            <input
+                    class="input"
+                    type="text"
+                    placeholder="Hashtag는 콤마(,)로 구분 됩니다"
+                    required
+            />
+            <div class="form-btn-box box_pos">
+                <form method="PATCH" action="/edit_problem">
+                    <input onclick="edit_problem()" class="box" type="submit" value="Submit"/>
+                    <input class="box" type="button" value="Cancel"/>
+                </form>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
